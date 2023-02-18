@@ -14,6 +14,8 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useVerification } from "../Contexts/Verification";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Copyright(props: any) {
   return (
@@ -46,6 +48,30 @@ export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (data.get("email") === "") {
+      return (toast.warn('Fill the email input!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        }));
+    }
+    if (data.get("password") === "") {
+      return (toast.warn('Fill the password input!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        }));
+    }
     console.log({
       email: data.get("email"),
       password: data.get("password"),
@@ -126,6 +152,7 @@ export default function SignIn() {
               >
                 Sign In
               </Button>
+              <ToastContainer />
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
