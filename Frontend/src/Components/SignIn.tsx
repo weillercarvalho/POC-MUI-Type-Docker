@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useVerification } from "../Contexts/Verification";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { signin } from "../Services/Services";
 
 function Copyright(props: any) {
   return (
@@ -72,10 +73,16 @@ export default function SignIn() {
         theme: "light",
         }));
     }
-    console.log({
+    const infos = {
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+    signin(infos).then(r => {
+      console.log(r.data);
+      navigate("/signup")
+    }).catch(r => {
+      console.log(r)
+    })
   };
 
   return (

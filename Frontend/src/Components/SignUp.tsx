@@ -14,6 +14,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useVerification } from "../Contexts/Verification";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { signup } from "../Services/Services";
 
 function Copyright(props: any) {
   return (
@@ -46,11 +49,53 @@ export default function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    if (data.get("firstName") === "") {
+      return (toast.warn('Fill the name input!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        }));
+    }
+    if (data.get("email") === "") {
+      return (toast.warn('Fill the email input!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        }));
+    }
+    if (data.get("password") === "") {
+      return (toast.warn('Fill the password input!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        }));
+    }
     const infos = {
       name: data.get("firstName"),
       email: data.get("email"),
       password: data.get("password"),
     };
+    signup(infos).then(r => {
+      console.log(r.data);
+      navigate("/");
+    }).catch(r => {
+      console.log(r);
+    })
   };
 
   return (
@@ -137,6 +182,7 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            <ToastContainer />
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/" variant="body2">

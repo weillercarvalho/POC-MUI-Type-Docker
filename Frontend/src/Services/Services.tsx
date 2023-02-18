@@ -1,34 +1,27 @@
-const BASE_URL = "http://localhost:5000"
+import axios from "axios";
+
+const BASE_URL = "http://localhost:5000";
 
 
 function creatingHeader() {
-    const auth = JSON.parse(localStorage.getItem("weather") as any);
-    return auth;
+  const auth = JSON.parse(localStorage.getItem("weather") as any);
+  const header = {
+    headers: {
+        Authorization : `Bearer ${auth}`
+    }
+  }
+  return header;
 }
 
-async function signup(data: object) {
-    const response = await fetch(`${BASE_URL}/signup`, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'default',
-        credentials: 'same-origin',
-        body: JSON.stringify(data)
-    })
-    return response.json();
+async function signup(data: any) {
+  const response = await axios.post(`${BASE_URL}/signup`, data);
+  return response;
 }
 
 async function signin(data: object) {
-    const token = creatingHeader();
-    const response = await fetch(`${BASE_URL}/`, {
-        method: 'POST',
-        mode: 'cors',
-        cache: 'default',
-        credentials: 'same-origin',
-        headers: {
-            'Context-Type': 'text/plain',
-            'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify(data)
-    })
-    return response.json();
+  const token = creatingHeader();
+  const response = await axios.post(`${BASE_URL}/`, data, token);
+  return response;
 }
+
+export { signin, signup };
