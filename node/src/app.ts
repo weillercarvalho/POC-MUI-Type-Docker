@@ -9,7 +9,7 @@ const server = express();
 
 server.use(cors());
 server.use(express.json());
-server.use(signrouter);
+server.use("/api",signrouter);
 
 server.listen(process.env.PORT, () => {
     console.log(`Listening on the ${process.env.PORT}`)

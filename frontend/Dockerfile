@@ -1,5 +1,7 @@
 FROM node:16.19.0
 
+RUN npm set cache --global
+
 WORKDIR /app
 
 COPY . .
